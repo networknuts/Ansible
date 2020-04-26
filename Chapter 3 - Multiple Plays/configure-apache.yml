@@ -1,0 +1,26 @@
+---
+- name: configure a simple apache server
+  hosts: all
+  tasks:
+    - name: install httpd
+      yum:
+        name: httpd
+        state: present
+
+    - name: start httpd
+      service:
+        name: httpd
+        state: started
+        enabled: true
+
+    - name: create index.html file
+      copy:
+        content: "Sample Apache Server."
+        dest: /var/www/html/index.html
+
+    - name: configure apache in firewalld
+      firewalld:
+        service: http
+        immediate: true
+        permanent: true
+        state: enabled

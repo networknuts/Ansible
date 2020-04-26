@@ -1,0 +1,13 @@
+---
+- name: create multiple files
+  hosts: all
+  tasks:
+      - name: create a simple file
+        file:
+            path: /tmp/simplefile
+            state: touch
+
+      - name: create a file with some content
+        copy:
+            content: "This file is created using Ansible"
+            dest: /tmp/filewithcontent.txt
