@@ -1,0 +1,10 @@
+---
+- name: copy file to variable destination
+  hosts: all
+  vars:
+    destination: /tmp/ansiblefiles
+  tasks:
+    - name: copy file to custom destination
+      copy:
+        src: /etc/hosts
+        dest: "{{ destination }}/hosts.txt"

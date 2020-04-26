@@ -1,0 +1,32 @@
+---
+- name: configure a simple apache server
+  hosts: all
+  vars:
+    - my_pkg: httpd
+    - my_svc: httpd
+    - destination: /var/www/html/index.html
+    - my_content: "Apache servers using Ansible with Network Nuts"
+    - rule: http
+  tasks:
+    - name: install my package
+      yum:
+        name: "{{ my_pkg }}"
+        state: present
+
+    - name: start my service
+      service:
+        name: "{{ my_svc }}"
+        state: started
+        enabled: true
+
+    - name: create index.html file
+      copy:
+        content: "{{ my_content }}"
+        dest: "{{ destination }}"
+
+    - name: configure apache in firewalld
+      firewalld:
+        service: "{{ rule }}"
+        immediate: true
+        permanent: true
+        state: enabled

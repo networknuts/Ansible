@@ -1,0 +1,20 @@
+---
+- name: using variables with httpd
+  hosts: all
+  vars:
+    my_pkg: httpd
+  tasks:
+      - name: install my package
+        yum:
+          name: "{{ my_pkg }}"
+          state: present
+
+      - name: start my package service
+        service:
+          name: "{{ my_pkg }}"
+          state: started
+
+      - name: stop my package service
+        service:
+          name: "{{ my_pkg }}"
+          state: stopped

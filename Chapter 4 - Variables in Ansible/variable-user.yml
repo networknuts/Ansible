@@ -1,0 +1,12 @@
+---
+- name: creating a user with variables
+  hosts: all
+  vars:
+    - user_name: sampleuser
+    - user_uid: 5050
+  tasks:
+    - name: creating a user with custom username and uid
+      user:
+        name: "{{ user_name }}"
+        uid: "{{ user_uid }}"
+        state: present
