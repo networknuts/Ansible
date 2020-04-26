@@ -1,0 +1,8 @@
+---
+- name: create file with some content
+  hosts: all
+  tasks:
+        - name: create a file with some content in it
+          copy:
+            content: "Input content here"
+            dest: /tmp/myfile

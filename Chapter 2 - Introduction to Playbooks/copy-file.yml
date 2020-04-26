@@ -1,0 +1,8 @@
+---
+- name: copy file from local to node machine
+  hosts: all
+  tasks:
+        - name: copy /etc/hosts to /etc/hosts
+          copy:
+            src: /etc/hosts
+            dest: /etc/hosts

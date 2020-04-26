@@ -1,0 +1,10 @@
+---
+- name: enable service in firewalld
+  hosts: all
+  tasks:
+        - name: allow apache in firewalld
+          firewalld:
+            service: http
+            immediate: true
+            permanent: true
+            state: enabled

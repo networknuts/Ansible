@@ -1,0 +1,8 @@
+---
+- name: restart a service
+  hosts: all
+  tasks:
+        - name: restart httpd service
+          service:
+                name: httpd
+                state: restarted
