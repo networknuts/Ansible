@@ -1,0 +1,14 @@
+---
+- name: update httpd
+  hosts: all
+  tasks:
+    - name: update httpd
+      yum:
+        name: http
+        state: latest
+      ignore_errors: true
+
+    - name: restart firewalld
+      service:
+        name: firewalld
+        state: restarted

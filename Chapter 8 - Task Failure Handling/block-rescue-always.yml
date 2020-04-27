@@ -1,0 +1,33 @@
+---
+- name: update httpd and restart firewalld
+  hosts: all
+  tasks:
+  - name: block for conditional handling
+    block:
+    - name: update httpd
+      yum:
+        name: httpd
+        state: latest
+
+    - name: restart firewalld
+      service:
+        name: firewalld
+        state: restarted
+    rescue:
+      - name: restart httpd in case of failure
+        service:
+          name: httpd
+          state: restarted
+
+      - name: create failure.txt
+        copy:
+          content: "Apache update has failed"
+          dest: /tmp/apachestatus.txt
+    always:
+      - name: restart sshd and firewalld
+        service:
+          name: "{{ item }}"
+          state: restarted
+        loop:
+          - firewalld
+          - sshd
