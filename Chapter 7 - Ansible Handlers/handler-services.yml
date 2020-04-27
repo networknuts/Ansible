@@ -1,0 +1,24 @@
+---
+- name: restart apache and mysql if packages are updated
+  hosts: all
+  tasks:
+    - name: update httpd and mysql
+      yum:
+        name:
+          - httpd
+          - mysql
+        state: latest
+      notify:
+        - restart apache
+        - restart mysql
+
+  handlers:
+    - name: restart apache
+      service:
+        name: httpd
+        state: restarted
+
+    - name: restart mysql
+      service:
+        name: mysql
+        state: restarted

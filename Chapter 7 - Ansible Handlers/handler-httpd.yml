@@ -1,0 +1,16 @@
+---
+- name: restart apache if httpd is updated
+  hosts: all
+  tasks:
+    - name: update httpd
+      yum:
+        name: httpd
+        state: latest
+      notify:
+        - restart apache
+
+  handlers:
+    - name: restart apache
+      service:
+        name: httpd
+        state: restarted

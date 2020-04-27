@@ -1,0 +1,16 @@
+---
+- name: create a file if apache is updated
+  hosts: all
+  tasks:
+    - name: update httpd
+      yum:
+        name: httpd
+        state: latest
+      notify:
+        - create apache updated file
+
+  handlers:
+    - name: create apache updated file
+      copy:
+        content: "Apache has been updated"
+        dest: /tmp/apachestatus.txt
