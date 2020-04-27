@@ -1,0 +1,8 @@
+---
+- name: basic template two
+  hosts: all
+  tasks:
+    - name: copy template2.j2 to node
+      template:
+        src: /templates/template2.j2
+        dest: /tmp/template2.txt

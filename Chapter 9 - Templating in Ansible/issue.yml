@@ -1,0 +1,32 @@
+---
+- name: config /etc/issue
+  hosts: all
+  vars:
+          - system_owner: Mark
+          - company_name: NetworkNuts
+  tasks:
+          - name: copy issue.j2
+            template:
+                    src: /root/patrick/issue.j2
+                    dest: /etc/issue
+                    owner: root
+                    group: root
+
+          - name: replace line in sshd_config
+            lineinfile:
+                    path: /etc/ssh/sshd_config
+                    line: 'Banner /etc/issue'
+                    regexp: '#Banner none'
+
+          - name: make /etc/issue.net a soft link to /etc/issue
+            file:
+                    src: /etc/issue
+                    dest: /etc/issue.net
+                    state: link
+                    owner: root
+                    group: root
+
+          - name: restart sshd
+            service:
+                    name: sshd
+                    state: restarted

@@ -1,0 +1,12 @@
+---
+- name: configure /etc/motd
+  hosts: all
+  vars:
+    company_name: NetworkNuts
+  tasks:
+    - name: copy motd.j2 to /etc/motd
+      template:
+        src: /templates/motd.j2
+        dest: /etc/motd
+        owner: root
+        group: root
