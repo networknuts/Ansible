@@ -1,0 +1,13 @@
+---
+- name: using loop with firewalld
+  hosts: all
+  tasks:
+    - name: enable http and https in firewalld
+      firewalld:
+        name: "{{ item }}"
+        immediate: true
+        permanent: true
+        state: enabled
+      loop:
+        - http
+        - https 

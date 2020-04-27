@@ -1,0 +1,13 @@
+---
+- name: install multiple packages
+  hosts: all
+  tasks:
+        - name: install apache, firewalld, openssh and cups package
+          yum:
+                name:
+                  - httpd
+                  - firewalld
+                  - openssh
+                  - cups
+                state: present
+# The yum or dnf module do not require a loop.

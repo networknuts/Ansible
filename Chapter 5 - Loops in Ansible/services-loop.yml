@@ -1,0 +1,12 @@
+---
+- name: using loop with services
+  hosts: all
+  tasks:
+    - name: using loop to start httpd, firewalld and sshd
+      service:
+        name: "{{ item }}"
+        state: started
+      loop:
+        - httpd
+        - firewalld
+        - sshd
