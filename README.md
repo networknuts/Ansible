@@ -4,6 +4,26 @@ Playbooks for RH294 Ansible Course with Network Nuts.
 
 http://networknuts.net
 
+## Usage
+
+Use this to execute an ad-hoc command.
+
+```bash
+ansible hostname -m modulename -a 'arguments'
+```
+
+Use the syntax-check command to check syntax in a playbook.
+
+```bash
+ansible-playbook *playbookname.yml* --syntax-check
+```
+
+Use this to execute a playbook.
+
+```bash
+ansible-playbook *playbookname.yml*
+```
+
 ## Chapter 2: Introduction to Playbooks
 This introduces you to the world of Ansible playbooks. Here you will find playbooks for basic tasks.
 
