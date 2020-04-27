@@ -1,0 +1,12 @@
+---
+- name: update apache if date is more than 10
+  hosts: all
+  vars:
+    - date: 8
+  tasks:
+    - name: update apache
+      yum:
+        name: httpd
+        state: latest
+      when: date > 10
+#This playbook will not run since date is not greater than 10.

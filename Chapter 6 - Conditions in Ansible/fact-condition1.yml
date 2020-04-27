@@ -1,0 +1,9 @@
+---
+- name: install apache is node is a RedHat machine
+  hosts: all
+  tasks:
+    - name: install apache on RedHat machines
+      yum:
+        name: httpd
+        state: present
+      when: ansible_distribution == 'RedHat'

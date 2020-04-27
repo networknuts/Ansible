@@ -1,0 +1,14 @@
+---
+- name: install apache is node is a RedHat, CentOS or Fedora machine
+  hosts: all
+  vars:
+    supported_distros:
+      - RedHat
+      - Fedora
+      - CentOS
+  tasks:
+    - name: install apache on RedHat machines
+      yum:
+        name: httpd
+        state: present
+      when: ansible_distribution in supported_distros

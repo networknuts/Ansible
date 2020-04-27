@@ -1,0 +1,12 @@
+---
+- name: update apache if date is less than 20
+  hosts: all
+  vars:
+    - date: 18
+  tasks:
+    - name: update apache
+      yum:
+        name: httpd
+        state: latest
+      when: date < 20
+#This playbook will run since date is lesser than 20.

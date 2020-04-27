@@ -1,0 +1,9 @@
+---
+- name: install apache if RAM on the node is greater than 1000 MB
+  hosts: all
+  tasks:
+    - name: install apache if RAM > 1000 MB
+      yum:
+        name: httpd
+        state: present
+      when: ansible_memtotal > 1000
