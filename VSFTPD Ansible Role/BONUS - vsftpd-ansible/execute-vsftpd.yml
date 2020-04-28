@@ -1,0 +1,5 @@
+---
+- name: execute VSFTPD Role
+  hosts: all
+  roles:
+    - vsftpd-ansible
