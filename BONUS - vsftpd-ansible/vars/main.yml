@@ -1,0 +1,4 @@
+---
+# vars file for vsftpd-ansible
+#CHANGE SYSTEM_OWNER VALUE WITH YOUR NAME
+system_owner: Aryan

@@ -1,0 +1,73 @@
+---
+# tasks file for vsftpd-ansible
+- name: install vsftpd
+  package:
+          name: vsftpd
+          state: present
+
+- name: start and enable vsftpd service
+  service:
+          name: vsftpd
+          enabled: true
+          state: started
+
+- name: allow vsftpd in firewalld
+  firewalld:
+          service: ftp
+          immediate: true
+          permanent: true
+          state: enabled
+
+- name: create a vsftpd backup directory
+  file:
+          path: /etc/vsftpd/backup/
+          state: directory
+
+- name: backup vsftpd.conf to vsftpd.conf.orig
+  copy:
+          src: /etc/vsftpd/vsftpd.conf
+          dest: /etc/vsftpd/backup/vsftpd.conf.orig
+          remote_src: yes
+
+- name: copy new vsftpd.conf file
+  copy:
+          src: vsftpd.conf
+          dest: /etc/vsftpd/vsftpd.conf
+
+- name: add lines in /etc/vsftpd/vsftpd.conf
+  lineinfile:
+          path: /etc/vsftpd/vsftpd.conf
+          line: "{{ item }}"
+  loop:
+         - 'userlist_file=/etc/vsftpd.userlist'
+         - 'userlist_deny=NO'
+         - 'allow_writeable_chroot=YES'
+         - 'chroot_local_user=YES'
+  notify:
+          - restart vsftpd
+
+- name: securing FTP server with SELINUX
+  seboolean:
+          name: ftpd_full_access
+          state: yes
+          persistent: yes
+
+- name: useradd for ftp testing
+  user:
+          name: Paul
+          password: $6$DBnEaspBCEg.jqlE$fSOcytgmIK0WvQnl7MqN8GvG3wNmLuyYZDpO/iCP62B5PcgboiG2FnkX1muzXhrBBetEfRma5io.TlPs1ah2c.
+          shell: /bin/bash
+          comment: 'Paul, FTP Team'
+          state: present
+
+- name: add user Paul in /etc/vsftpd.userlist
+  lineinfile:
+          path: /etc/vsftpd.userlist
+          line: 'Paul'
+          create: yes
+          state: present
+
+- name: create sample file in Paul's home directory
+  template:
+          src: ansible-vsftpd.j2
+          dest: /home/Paul/ansible-vsftpd.txt
