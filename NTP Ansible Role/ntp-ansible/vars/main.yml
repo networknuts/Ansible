@@ -1,0 +1,3 @@
+---
+# vars file for ntp-ansible
+#ntp_server: server.example.com

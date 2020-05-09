@@ -1,0 +1,7 @@
+---
+# tasks file for ntp-ansible
+- include: server_tasks.yml
+  when: "'ntp_servers' in group_names"
+
+- include: client_tasks.yml
+  when: "'ntp_clients' in group_names"

@@ -1,0 +1,22 @@
+---
+#Task files for client machine
+- name: run this only on client machines
+  debug:
+          msg: 'This runs only on the NTP clients'
+
+- name: install NTP package Chrony
+  yum:
+          name: chrony
+          state: present
+
+- name: edit /etc/chrony.conf
+  lineinfile:
+          path: /etc/chrony.conf
+          line: 'server {{ ntp_server }}'
+          state: present
+
+- name: restart and enable chrony for client
+  service:
+          name: chronyd
+          enabled: true
+          state: restarted

@@ -1,0 +1,36 @@
+---
+# tasks file for ntp-ansible
+- name: run this only on server machines
+  debug:
+          msg: 'This runs only the NTP server machines'
+
+- name: install NTP package Chrony
+  yum:
+          name: chrony
+          state: present
+
+- name: add NTP pool in /etc/chrony.conf
+  lineinfile:
+          path: /etc/chrony.conf
+          line: "{{ item }}"
+          state: present
+  loop:
+         -  'server 0.in.pool.ntp.org'
+         -  'server 1.in.pool.ntp.org'
+         -  'server 2.in.pool.ntp.org'
+         -  'server 3.in.pool.ntp.org'
+
+- name: allow local network to sync with Chrony
+  lineinfile:
+          path: /etc/chrony.conf
+          regexp: '#allow 192.168.0.0/16'
+          line: 'allow {{ ip_subnet }}'
+  notify:
+          - restart and enable NTP for Server
+
+- name: allow NTP in the firewall
+  firewalld:
+          service: ntp
+          permanent: true
+          immediate: true
+          state: enabled

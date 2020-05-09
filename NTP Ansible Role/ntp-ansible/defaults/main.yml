@@ -1,0 +1,4 @@
+---
+# defaults file for ntp-ansible
+ntp_server: 10.0.0.2
+ip_subnet: 10.0.0.0/8

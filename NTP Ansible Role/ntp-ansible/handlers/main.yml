@@ -1,0 +1,13 @@
+---
+# handlers file for ntp-ansible
+- name: restart and enable chrony for server
+  service:
+          name: chronyd
+          state: restarted
+          enabled: true
+
+- name: restart and enable chrony for client
+  service:
+          name: chronyd
+          state: restarted
+          enabled: true
