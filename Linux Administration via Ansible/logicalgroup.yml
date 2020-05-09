@@ -1,0 +1,9 @@
+---
+- name: create a logical volume of 2 GB
+  hosts: all
+  tasks:
+          - name: create logical volume
+            lvol:
+                    vg: vg1
+                    lv: lv1
+                    size: 2G

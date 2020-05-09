@@ -1,0 +1,10 @@
+---
+- name: mount a device
+  hosts: all
+  tasks:
+          - name: mount device with ID
+            mount:
+                    path: /mnt/data
+                    src: #UUID=
+                    fstype: xfs
+                    state: present

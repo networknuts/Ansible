@@ -1,0 +1,9 @@
+---
+- name: create a volume group
+  hosts: all
+  tasks:
+          - name: creating a volume group
+            lvg:
+                    vg: vg1
+                    pvs: /dev/vda1
+                    pesize: 32

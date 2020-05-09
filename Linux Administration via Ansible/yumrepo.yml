@@ -1,0 +1,16 @@
+---
+- name: configure yum repo
+  hosts: all
+  tasks:
+          - name: create repo
+            yum_repository:
+                    file: example
+                    name: example-internal
+                    baseurl: #inputURLhere
+                    enabled: yes
+                    gpgcheck: yes
+
+          - name: import gpg key
+            rpm_key:
+                    key: #keyURLhere
+                    state: present

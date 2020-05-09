@@ -1,0 +1,12 @@
+---
+- name: network connection config
+  hosts: all
+  tasks:
+          - name: using the nmcli module
+            nmcli:
+                    conn_name: ens4-conn
+                    ifname: ens4
+                    type: ethernet
+                    ip4: #Enter IPv4
+                    gw4: #Enter gw4
+                    state: present

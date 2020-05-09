@@ -1,0 +1,10 @@
+---
+- name: remove tempuser in 20 mins
+  hosts: all
+  tasks:
+          - name: remove tempuser
+            at:
+                    command: userdel -r tempuser
+                    count: 20
+                    units: minute
+                    unique: yes

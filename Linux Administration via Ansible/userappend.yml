@@ -1,0 +1,9 @@
+---
+- name: add user to another group
+  hosts: all
+  tasks:
+          - name: add new user to multiple groups
+            user:
+                    name: devops_user
+                    groups: sys_admins, developers
+                    append: yes

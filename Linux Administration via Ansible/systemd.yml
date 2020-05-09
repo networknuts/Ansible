@@ -1,0 +1,9 @@
+---
+- name: reload web server
+  hosts: all
+  tasks:
+          - name: reload web server
+            systemd:
+                    name: httpd
+                    state: reload
+                    daemon-reload: yes

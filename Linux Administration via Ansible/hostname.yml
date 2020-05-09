@@ -1,0 +1,7 @@
+---
+- name: change hostname
+  hosts: all
+  tasks:
+          - name: change hostname
+            hostname:
+                    name: managedhost1

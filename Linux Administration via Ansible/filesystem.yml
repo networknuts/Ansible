@@ -1,0 +1,8 @@
+---
+- name: create a filesystem
+  hosts: all
+  tasks:
+          - name: create XFS filesystem
+            filesystem:
+                    fstype: xfs
+                    dev: /dev/vdb1

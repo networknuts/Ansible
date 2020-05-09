@@ -1,0 +1,11 @@
+---
+- name: reboot machine
+  hosts: all
+  tasks:
+          - name: reboot after 180 seconds
+            reboot:
+                    reboot_timeout: 180
+
+          - name: quick reboot
+            reboot:
+

@@ -1,0 +1,17 @@
+---
+- name: register and subscribe the system
+  hosts: all
+  tasks:
+          - name: red hat subscription
+            redhat_subscription:
+                    username: #inputusername
+                    password: #inputpasswd
+                    pool_ids: #inputPoolID
+                    state: present
+
+          - name: enable red hat repositories
+            rhsm_repository:
+                    name:
+                            - rhel-8-for-x86_64-baseos-rpms
+                            - rhel-8-for-x86_64_baseos-debug-rpms
+                    state: present
