@@ -1,0 +1,15 @@
+---
+- name: mysql database backup using Ansible
+  hosts: 10.0.0.11
+  tasks:
+      - name: Backup employees database on 10.0.0.11
+        mysql_db:
+             name: employees
+             state: dump
+             target: /tmp/mysql_databases/employees01.sql
+
+      - name: restore database from backup
+        mysql_db:
+             name: employees
+             state: import
+             target: /tmp/mysql_databases/employees01.sql 
