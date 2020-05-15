@@ -1,6 +1,6 @@
-# Ansible-RH294
+# Ansible
 
-Playbooks for RH294 Ansible Course with Network Nuts.
+Some sample playbooks for Ansible Course 
 
 http://networknuts.net
 
