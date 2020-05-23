@@ -1,0 +1,19 @@
+---
+- name: check if file exists, create if it does not
+  hosts: all
+  tasks:
+    - name: check if /tmp/file.txt exists
+      stat:
+        path: /tmp/file.txt
+      register: stat_result
+
+    - name: display file existence result
+      debug:
+         msg: 'The file exists'
+      when: stat_result.stat.exists
+
+    - name: create the file if it does not exists
+      file:
+        path: /tmp/file.txt
+        state: touch
+      when: not stat_result.stat.exists
