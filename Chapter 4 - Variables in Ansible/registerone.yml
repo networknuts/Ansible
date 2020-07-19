@@ -1,0 +1,12 @@
+---
+- name: find some files
+  hosts: all
+  tasks:
+    - name: find txt files 
+      shell: "find *.txt"
+      args:
+        chdir: "/tmp/"
+      register: find_output
+
+    - debug:
+        var: find_output.stdout_lines
