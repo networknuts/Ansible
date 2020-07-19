@@ -1,0 +1,5 @@
+---
+- name: copy httpd.conf file
+  copy:
+    src: httpd.conf
+    dest: /etc/httpd/conf/httpd.conf
