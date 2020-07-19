@@ -1,0 +1,17 @@
+---
+- name: checking uptime & hostname of all remote servers
+  hosts: all
+  tasks:
+    - name: system uptime
+      shell: uptime
+      register: uptime
+      
+    - name: system hostname
+      shell: hostname
+      register: hostname
+    
+    - debug: var={{ item }}
+      loop:
+        - uptime.stdout
+        - hostname.stdout
+        
