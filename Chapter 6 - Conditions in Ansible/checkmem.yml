@@ -1,0 +1,12 @@
+- name: checking memory and hdd space on servers before executing jobs
+  hosts: all
+  tasks:
+    - name: make sure ram is more than 2 GiB
+      shell: "cat /proc/meminfo| grep -i memtotal|awk '{print $2/1024/1024}'"
+      register: total_mem
+      failed_when: "total_mem.stdout|float < 2"
+
+    - name: check / space more than 5 GiB
+      shell: "df -h /|grep -v Filesystem|awk '{print $4}'|cut -d G -f1"
+      register: root_space
+      failed_when: "root_space.stdout|float < 5"
