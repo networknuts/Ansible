@@ -1,5 +1,5 @@
 ---
-- name: checking memory and hdd space on servers before executing jobs
+- name: check memory and hdd space on servers before executing jobs
   hosts: all
   tasks:
     - name: make sure ram is more than 2 GiB
