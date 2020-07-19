@@ -1,0 +1,68 @@
+---                                                                                                                                                                                                                     
+- name: install and configure webserver
+  hosts: nodeone.example.com
+  force_handlers: yes
+#  ignore_errors: yes
+  vars: 
+    - web_pkg: httpd
+    - web_srv: httpd
+    - web_app: http
+  tasks:
+    - name: install {{ web_pkg }} package
+      yum:
+        name: "{{ web_pkg }}"
+        state: latest
+      tags:
+        - install
+   
+    - name: copy httpd.conf file
+      copy:
+        src: httpd.conf
+        dest: /etc/httpd/conf/httpd.conf
+      notify: alokjob
+      tags:
+        - conffile
+   
+    - name: copy index.html file
+      copy:
+        src: index.html
+        dest: /var/www/html/index.html
+      ignore_errors: yes
+      tags:
+        - htmlfile
+   
+    - name: start {{ web_srv }} service
+      service:
+        name: "{{ web_srv }}"
+        state: started
+        enabled: true
+      tags:
+        - webservice
+   
+    - name: add {{ web_app }} in firewall
+      firewalld:
+        service: "{{ web_app }}"
+        permanent: yes
+        state: enabled
+        immediate: true
+      tags:
+        - port80
+   
+   
+    - name: add port 81 in firewall
+      firewalld:
+        port: 81/tcp
+        permanent: yes
+        state: enabled
+        immediate: true
+      tags:
+        - port81
+   
+  handlers:
+    - name: alokjob
+      service:
+        name: httpd
+        state: restarted
+   
+# You can use the tags to run a specifif task from the playbook
+# ansible-playbook tags.yml --tags=webservice,port81
