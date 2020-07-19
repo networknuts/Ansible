@@ -1,0 +1,18 @@
+---
+- name: install and configure webserver
+  hosts: all
+  tasks:
+    - import_tasks: myinstall.yml
+#   - include_tasks: myinstall.yml 
+    - import_tasks: myconfig.yml
+    - import_tasks: myservice.yml
+
+#the main difference between import and include is
+#import will parse all playbooks / tasks which are
+#called from main playbook at the start of the play
+#whereas include is dynamic and will parse the code
+#only when its called
+#now here we need to create three playbooks
+#1 - myinstall.yml - which shall include code to install
+#2 - myconfig.yml - which will copy httpd.conf file
+#3 - myservice.yml - which will start the service
