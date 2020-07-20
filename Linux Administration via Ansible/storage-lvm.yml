@@ -1,0 +1,53 @@
+---
+- name: using storage for lvm
+  hosts: nodeone.example.com
+  tasks:
+    - name: create first partition
+      parted:
+          device: /dev/sdb
+          number: 1
+          state: present
+          part_end: 1GiB
+          flags: [ lvm ]
+      tags:
+        - partone
+
+    - name: create second partition
+      parted:
+        device: /dev/sdb
+        number: 2
+        state: present
+        part_start: 1GiB
+        part_end: 2GiB
+        flags: [ lvm ]
+      tags:
+        - parttwo
+
+    - name: create a volume group
+      lvg:
+          vg: VGONE
+          pvs: /dev/sdb1,/dev/sdb2
+          pesize: 32
+      ignore_errors: yes
+      tags: 
+        - vg
+
+    - name: create a logical volume
+      lvol:
+          vg: VGONE
+          lv: LVONE
+          size: 1500m
+      ignore_errors: yes
+      tags: 
+        - lvm
+
+    - name: create filesytem
+      filesystem:
+        dev: /dev/VGONE/LVONE
+        fstype: ext4
+      tags: 
+        - ext4file
+
+#this playbook will create two partitions /dev/sdb1 and /dev/sdb2
+#it then adds it into a volume group and finally create a logical volume
+#out of it. Creating ext4 filesystem and mounting it under /etc/fstab
