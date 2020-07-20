@@ -1,0 +1,24 @@
+---
+- name: install webserver
+  hosts: all
+  tasks:
+    - name: install httpd
+      yum:
+        name: httpd
+        state: latest
+      when: ansible_processor_cores >= 2 and ansible_os_family == "RedHat"
+
+    - name: install apache2
+      apt:
+        name: apache2
+        state: present
+      when: 
+        - ansible_processor_cores >= 2 
+        - ansible_os_family == "Debian"
+        
+#this playbook will work in a mix environment where
+#we have rhel and debian (ubuntu) machines
+#we want the playbook to use yum package manager if OS is RedHat
+#and use apt package manager if OS id Debian
+#further webserver will be installed only if the remote server
+#has min 2GiB of RAM
