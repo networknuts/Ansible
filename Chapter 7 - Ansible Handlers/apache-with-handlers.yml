@@ -1,0 +1,78 @@
+---
+- name: install and configure webserver
+  hosts: nodeone.example.com
+#  force_handlers: yes
+#  ignore_errors: yes
+  vars:
+    - web_pkg: httpd
+    - web_srv: httpd
+    - web_app: http
+ 
+  tasks:
+    - name: install {{ web_pkg }} package
+      yum:  
+        name: "{{ web_pkg }}"
+        state: latest
+      tags:
+        - install
+
+    - name: copy httpd.conf file
+      copy:
+        src: httpd.conf
+        dest: /etc/httpd/conf/httpd.conf
+      notify: restart_httpd
+      tags:
+        - conffile
+
+    - name: copy index.html file
+      copy:
+        src: index.html
+        dest: /var/www/html/index.html
+      ignore_errors: yes
+      tags:
+        - htmlfile
+
+    - name: start {{ web_srv }} service
+      service:
+        name: "{{ web_srv }}"
+        state: started
+        enabled: true
+      tags:
+        - webservice
+
+    - name: add {{ web_app }} in firewall
+      firewalld:
+        service: "{{ web_app }}"
+        permanent: yes
+        state: enabled
+        immediate: true
+      tags:
+        - port80
+
+
+    - name: add port 81 in firewall
+      firewalld:
+        port: 81/tcp
+        permanent: yes
+        state: enabled
+        immediate: true
+      tags:
+        - port81
+
+  handlers:
+    - name: restart_httpd
+      service:
+        name: httpd
+        state: restarted
+
+#this playbook will install and configure webserver on remote servers
+#you need to copy httpd.conf in the current directory
+#you also need to create a sample index.html file for this playbook
+#files are available in repo
+#you can use tags to run a portion of a playbook, like
+
+#ansible-playbook apache-with-handlers.yml --tags=port80
+
+#this will only run the task with tag "port80" from the playbook
+#force_handlers=yes will force the handlers to run everytime you run the playbook
+#ignore_errors=yes will move to the next task, if there is a error in current task
