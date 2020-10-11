@@ -1,0 +1,4 @@
+OS: {{ ansible_facts['distribution'] }}
+RAM: {{ ansible_facts['memtotal_mb'] }}
+Name: {{ ansible_facts['fqdn'] }}
+OS Version: {{ ansible_facts['distribution_version'] }}
