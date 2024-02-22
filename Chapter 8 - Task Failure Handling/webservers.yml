@@ -1,0 +1,28 @@
+---
+- name: configure webserver
+  hosts: all
+  become: true
+  tasks:
+   - name: install apache
+     yum:
+      name: httpd
+      state: latest
+      
+   - name: start and enable apache
+     systemd:
+      name: httpd
+      state: started
+      enabled: true
+      
+   - name: create index.html file
+     template:
+      src: index.j2
+      dest: /var/www/html/index.html
+      
+   - name: allow http in firewalld
+     firewalld:
+      service: http
+      permanent: true
+      immediate: true
+      state: enabled
+     ignore_errors: true

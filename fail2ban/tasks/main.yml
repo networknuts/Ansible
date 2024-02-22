@@ -1,0 +1,17 @@
+---
+# tasks file for fail2ban
+- name: install fail2ban
+  yum:
+   name: fail2ban
+   state: latest
+
+- name: copy jail.local.j2 template
+  template:
+   src: jail.local.j2
+   dest: /etc/fail2ban/jail.local
+
+- name: start and enable fail2ban
+  service:
+   name: fail2ban
+   state: started
+   enabled: true

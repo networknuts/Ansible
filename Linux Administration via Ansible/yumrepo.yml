@@ -9,6 +9,7 @@
                     baseurl: #inputURLhere
                     enabled: yes
                     gpgcheck: yes
+                    gpgkey: #keyurl
 
           - name: import gpg key
             rpm_key:

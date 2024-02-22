@@ -1,0 +1,5 @@
+---
+# vars file for fail2ban
+log_path: /var/log/auth.log
+max_retry: 3
+ban_time: -1
